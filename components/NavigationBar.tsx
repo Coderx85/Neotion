@@ -9,12 +9,18 @@ import { cn } from '@/utils/lib';
 import { MenuIcon } from 'lucide-react';
 import UserItem from '@/app/(home)/documents/_components/user-item';
 import Item from '@/app/(home)/documents/_components/item';
+import { DocumentList } from '@/app/(home)/documents/_components/document-list';
+import { api } from '@/convex/_generated/api';
+import { useMutation } from 'convex/react';
+import { toast } from 'sonner';
+import { Id } from '@/convex/_generated/dataModel';
 
 export function Navigation() {
   const router = useRouter();
   const params = useParams();
   const pathname = usePathname();
   const isMobile = useMediaQuery('(max-width:768px)');
+  const create = useMutation(api.document.create);
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ComponentRef<'aside'>>(null);
@@ -62,10 +68,18 @@ export function Navigation() {
       );
     }
   };
-
+  
   const handleCreate = () => {
-    // const promise = 
-  }
+    const promise = create({ title: "Untitled" }).then((documentId: Id<"documents">) =>
+      router.push(`/documents/${documentId}`)
+    );
+
+    toast.promise(promise, {
+      loading: "Creating new note...",
+      success: "New note created!",
+      error: "Failed to create note.",
+    });
+  };
 
   const handleMouseUp = () => {
     isResizingRef.current = false;
@@ -146,10 +160,9 @@ export function Navigation() {
               icon={FaCirclePlus}
             />
           </div>
-          <div className="mt-4">Document Actions</div>
+          <DocumentList />
           <div
-            className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10
-        right-0 top-0"
+            className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"
             onMouseDown={handleMouseDown}
             onClick={resetWidth}
           ></div>
