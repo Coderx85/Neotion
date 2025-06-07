@@ -1,10 +1,16 @@
 import React, { ReactNode } from 'react';
 import { inter, lora } from '../styles/font';
-// import Provider from '@/components/providers/Provider';
-import SidebarPage from '@/components/NavigationBar';
+import { Metadata } from 'next';
+import { Toaster } from 'sonner';
+import '@/styles/globals.css';
 
 type Props = {
   children: ReactNode;
+};
+
+export const metadata: Metadata = {
+  title: 'Main Layout',
+  description: 'This is the main layout of the application.',
 };
 
 const MainLayout = ({ children }: Props) => {
@@ -21,6 +27,7 @@ const MainLayout = ({ children }: Props) => {
           <SidebarPage />
           <main className="flex-1 h-full overflow-y-auto">{children}</main>
         </div>
+            {children}
       </body>
     </html>
   );
