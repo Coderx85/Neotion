@@ -1,5 +1,11 @@
 'use client';
-import React, { ComponentRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  ComponentRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { FaChevronLeft, FaSearch } from 'react-icons/fa';
 import { useMediaQuery } from 'usehooks-ts';
@@ -14,6 +20,8 @@ import { api } from '@/convex/_generated/api';
 import { useMutation } from 'convex/react';
 import { toast } from 'sonner';
 import { Id } from '@/convex/_generated/dataModel';
+import { Separator } from './ui/separator';
+import { Navbar } from './Navbar';
 
 export function Navigation() {
   const router = useRouter();
@@ -68,16 +76,16 @@ export function Navigation() {
       );
     }
   };
-  
+
   const handleCreate = () => {
-    const promise = create({ title: "Untitled" }).then((documentId: Id<"documents">) =>
-      router.push(`/documents/${documentId}`)
+    const promise = create({ title: 'Untitled' }).then(
+      (documentId: Id<'documents'>) => router.push(`/documents/${documentId}`)
     );
 
     toast.promise(promise, {
-      loading: "Creating new note...",
-      success: "New note created!",
-      error: "Failed to create note.",
+      loading: 'Creating new note...',
+      success: 'New note created!',
+      error: 'Failed to create note.',
     });
   };
 
@@ -115,15 +123,13 @@ export function Navigation() {
     }
   }, []);
 
-  const Search = () => {
-    
-  }
+  const Search = () => {};
 
   return (
     <>
       <aside
         className={cn(
-          `group/sidebar h-full bg-gray-700 overflow-y-auto relative flex flex-col w-60 z-[99999]`,
+          `group/sidebar h-full bg-gray-700 dark:bg-zinc-800 overflow-y-auto relative flex flex-col w-60 z-[99999]`,
           isResetting && 'transition-all ease-in-out duration-300',
           isMobile && 'w-0'
         )}
@@ -141,25 +147,26 @@ export function Navigation() {
           >
             <FaChevronLeft className="w-6 h-6" />
           </div>
-          <div>
+          <div className="p-2">
             <UserItem />
             <Item
               label="Search"
               onClick={Search}
-              icon={FaSearch}
+              iconAction={FaSearch}
               isSearch
             />
-            <Item 
-              label='Settings'
+            <Item
+              label="Settings"
               onClick={() => router.push('/settings')}
-              icon={FaGear}
+              iconAction={FaGear}
             />
             <Item
               label="New Page"
               onClick={handleCreate}
-              icon={FaCirclePlus}
+              iconAction={FaCirclePlus}
             />
           </div>
+          <Separator className="mb-2" />
           <DocumentList />
           <div
             className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"
@@ -175,15 +182,20 @@ export function Navigation() {
           isMobile && 'left-0 w-full'
         )}
         ref={navbarRef}
-      >        <nav className="bg-transparent px-3 py-2 w-full">
-          {isCollapsed && (
-            <MenuIcon
-              className="w-6 h-6 text-muted-foreground cursor-pointer"
-              onClick={resetWidth}
-              role="button"
-            />
-          )}
-        </nav>
+      >
+        {!!params.documentId ? (
+          <Navbar isCollapsed={isCollapsed} onResetWidthAction={resetWidth} />
+        ) : (
+          <nav className="bg-transparent px-3 py-2 w-full">
+            {isCollapsed && (
+              <MenuIcon
+                className="w-6 h-6 text-muted-foreground cursor-pointer"
+                onClick={resetWidth}
+                role="button"
+              />
+            )}
+          </nav>
+        )}
       </div>
     </>
   );
