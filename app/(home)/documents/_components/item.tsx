@@ -17,10 +17,23 @@ import { MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FaChevronDown } from 'react-icons/fa';
-import { FaChevronRight, FaPlus, FaTrash } from 'react-icons/fa6';
+import { FaChevronRight, FaPlus } from 'react-icons/fa6';
 import { IconType } from 'react-icons/lib';
 import { toast } from 'sonner';
-import { BiRename } from 'react-icons/bi';
+import { BiRename, BiStar, BiTrash } from 'react-icons/bi';
+import { updateTitle } from '@/convex/document';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogClose,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import RenameModal from '@/components/modals/rename-modal';
+import { formatDistanceToNow } from 'date-fns';
 
 type ItemProps = {
   id?: Id<'documents'>;
@@ -48,8 +61,39 @@ export default function Item({
   onExpand,
 }: ItemProps) {
   const router = useRouter();
-  const create = useMutation(api.document.create);
   const { user } = useUser();
+  const create = useMutation(api.document.create);
+  const rename = useMutation(api.document.updateTitle);
+  const archive = useMutation(api.document.archive);
+  const star = useMutation(api.document.star);
+
+  const onStar = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (!id) return;
+
+    const promise = star({ id });
+
+    toast.promise(promise, {
+      loading: 'Starring document...',
+      success: 'Document starred!',
+      error: 'Failed to star document',
+    });
+  };
+
+  const onArchive = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    if (!id) return;
+
+    const promise = archive({ id });
+
+    toast.promise(promise, {
+      loading: 'Archiving document...',
+      success: 'Document archived!',
+      error: 'Failed to archive document',
+    });
+  };
 
   const handleExpand = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
@@ -58,7 +102,7 @@ export default function Item({
 
   const ChevronIcon = expanded ? FaChevronDown : FaChevronRight;
 
-  const onCreate = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const onCreate = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     if (!id) return;
     const promise = create({ title: 'Untitled', parentDocument: id }).then(
@@ -66,7 +110,7 @@ export default function Item({
         if (!expanded) {
           onExpand?.();
         }
-        router.push(`/documents/${documentId}`);
+        // router.push(`/documents/${documentId}`);
       }
     );
 
@@ -102,7 +146,9 @@ export default function Item({
           {documentIcon}
         </div>
       ) : (
-        <Icon className="shrink-0 size-3 text-center mr-2 text-muted-foreground dark:text-white/85" />
+        <Icon className="size-4 mr-2 text-muted-foreground dark:text-white/85" />
+        // <>
+        // </>
       )}
       <span className="truncate font-medium text-muted-foreground dark:text-white/85">
         {label}
@@ -115,33 +161,77 @@ export default function Item({
       {!!id && (
         <div className="ml-auto flex items-center gap-x-2">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+            <DropdownMenuTrigger asChild>
               <div
                 className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm
               hover:bg-neutral-300 dark:hover:bg-neutral-600"
                 role="button"
+                onClick={(e) => e.stopPropagation()}
               >
                 <MoreHorizontal className="size-3 text-muted-foreground dark:text-white/85 m-1" />
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="w-60"
+              className="w-60 bg-white bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-100"
               align="start"
               side="right"
               forceMount
             >
-              <DropdownMenuItem
-              // onClick={onArchive}
-              >
-                <FaTrash className="w-4 h-4 mr-2" />
-                Delete
+              <DropdownMenuItem onClick={onStar} className="flex items-center">
+                <BiStar className="w-4 h-4 mr-2" />| Favorite
               </DropdownMenuItem>
+              <Dialog>
+                <DropdownMenuItem>
+                  <DialogTrigger
+                    className="flex items-center"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <BiTrash className="w-4 h-4 mr-2" />| Archive
+                  </DialogTrigger>
+                </DropdownMenuItem>
+                <DialogContent>
+                  <DialogTitle className="text-lg font-semibold">
+                    Archive Document
+                  </DialogTitle>
+                  <div className="flex flex-col gap-y-4">
+                    <Label className="text-sm font-medium">
+                      Are you sure you want to archive this document?
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      This action cannot be undone. The document will be moved
+                      to the archive.
+                    </p>
+                    <div className="flex justify-end gap-2">
+                      <DialogClose asChild>
+                        <Button variant="outline">Cancel</Button>
+                      </DialogClose>
+                      <DialogClose asChild>
+                        <Button variant="destructive" onClick={onArchive}>
+                          Archive
+                        </Button>
+                      </DialogClose>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
               <DropdownMenuItem>
-                <BiRename />
+                <Dialog>
+                  <DialogTrigger
+                    className="flex items-center"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <BiRename className="w-4 h-4 mr-2 " />| Rename
+                  </DialogTrigger>
+                  <RenameModal id={id} documentName={label} />
+                </Dialog>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <div className="text-xs text-muted-foreground p-2">
                 Last edited by: {user?.username}
+                <br />
+                {formatDistanceToNow(new Date(document.lastModified || 0), {
+                  addSuffix: true,
+                })}
               </div>
             </DropdownMenuContent>
           </DropdownMenu>

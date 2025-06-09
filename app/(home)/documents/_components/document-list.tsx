@@ -9,20 +9,25 @@ import { useQuery } from 'convex/react';
 import { cn } from '@/utils/lib';
 import Item from './item';
 import { FileIcon } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
 
 interface DocumentListProps {
   parentDocumentId?: Id<'documents'>;
   level?: number;
   data?: Doc<'documents'>[];
+  star?: boolean;
 }
 
 export function DocumentList({
   parentDocumentId,
   level = 0,
+  star = false,
 }: DocumentListProps) {
   const params = useParams();
   const router = useRouter();
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+
+  const search = useQuery(api.document.getSearch);
 
   const onExpand = (documentId: string) => {
     setExpanded((prevExpanded) => ({
@@ -65,24 +70,68 @@ export function DocumentList({
       >
         No pages available
       </p>
-      {documents.map((document: Doc<'documents'>) => (
-        <div key={document._id}>
-          <Item
-            id={document._id}
-            onClick={() => onRedirect(document._id)}
-            label={document.title}
-            icon={FileIcon}
-            documentIcon={document.icon}
-            active={params.documentId === document._id}
-            level={level}
-            onExpand={() => onExpand(document._id)}
-            expanded={expanded[document._id]}
-          />
-          {expanded[document._id] && (
-            <DocumentList parentDocumentId={document._id} level={level + 1} />
-          )}
-        </div>
-      ))}
+      {!!star ? (
+        <>
+          {search &&
+            search?.map((document: Doc<'documents'>) => (
+              <div key={document._id} className="mx-2">
+                <Item
+                  key={document._id}
+                  id={document._id}
+                  onClick={() => onRedirect(document._id)}
+                  label={document.title}
+                  iconAction={FileIcon}
+                  documentIcon={document.icon}
+                  active={params.documentId === document._id}
+                  level={level}
+                  onExpand={() => onExpand(document._id)}
+                  expanded={expanded[document._id]}
+                />
+                {expanded[document._id] && (
+                  <DocumentList
+                    parentDocumentId={document._id}
+                    level={level + 1}
+                  />
+                )}
+                <Separator
+                  style={{
+                    paddingLeft: level ? `${level * 12 + 25}px` : undefined,
+                  }}
+                />
+              </div>
+            ))}
+        </>
+      ) : (
+        <>
+          {documents.map((document: Doc<'documents'>) => (
+            <div key={document._id} className="mx-2">
+              <Item
+                key={document._id}
+                id={document._id}
+                // onClick={() => onRedirect(document._id)}
+                label={document.title}
+                iconAction={FileIcon}
+                documentIcon={document.icon}
+                active={params.documentId === document._id}
+                level={level}
+                onExpand={() => onExpand(document._id)}
+                expanded={expanded[document._id]}
+              />
+              {expanded[document._id] && (
+                <DocumentList
+                  parentDocumentId={document._id}
+                  level={level + 1}
+                />
+              )}
+              <Separator
+                style={{
+                  paddingLeft: level ? `${level * 12 + 25}px` : undefined,
+                }}
+              />
+            </div>
+          ))}
+        </>
+      )}
     </>
   );
 }

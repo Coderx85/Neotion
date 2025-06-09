@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { useParams, usePathname, useRouter } from 'next/navigation';
-import { FaChevronLeft, FaSearch } from 'react-icons/fa';
+import { FaChevronLeft, FaSearch, FaTrashRestore } from 'react-icons/fa';
 import { useMediaQuery } from 'usehooks-ts';
 import { FaCirclePlus, FaGear } from 'react-icons/fa6';
 
@@ -22,6 +22,9 @@ import { toast } from 'sonner';
 import { Id } from '@/convex/_generated/dataModel';
 import { Separator } from './ui/separator';
 import { Navbar } from './Navbar';
+import { BiPlus } from 'react-icons/bi';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import TrashBox from './trash-box';
 
 export function Navigation() {
   const router = useRouter();
@@ -78,9 +81,10 @@ export function Navigation() {
   };
 
   const handleCreate = () => {
-    const promise = create({ title: 'Untitled' }).then(
-      (documentId: Id<'documents'>) => router.push(`/documents/${documentId}`)
-    );
+    const promise = create({ title: 'Untitled' })
+      .then
+      // (documentId: Id<'documents'>) => router.push(`/documents/${documentId}`)
+      ();
 
     toast.promise(promise, {
       loading: 'Creating new note...',
@@ -157,7 +161,7 @@ export function Navigation() {
             />
             <Item
               label="Settings"
-              onClick={() => router.push('/settings')}
+              // onClick={() => router.push('/settings')}
               iconAction={FaGear}
             />
             <Item
@@ -167,7 +171,35 @@ export function Navigation() {
             />
           </div>
           <Separator className="mb-2" />
+          <h2 className="text-sm my-2 font-semibold px-2 text-muted-foreground">
+            Favorite
+          </h2>
+          <DocumentList star />
+          <Separator className="mb-2" />
+          <h2 className="text-sm my-2 font-semibold px-2 text-muted-foreground">
+            Pages
+          </h2>
           <DocumentList />
+          <div className="mt-4">
+            <Item
+              label="Add a Page"
+              onClick={handleCreate}
+              iconAction={BiPlus}
+            />
+            <Popover>
+              <PopoverTrigger className="w-full mt-4">
+                <Item label="Restore" iconAction={FaTrashRestore} />
+              </PopoverTrigger>
+              <PopoverContent
+                className="w-64"
+                side={isMobile ? 'bottom' : 'right'}
+              >
+                <TrashBox />
+              </PopoverContent>
+            </Popover>
+          </div>
+
+          {/* Resize handle */}
           <div
             className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"
             onMouseDown={handleMouseDown}
