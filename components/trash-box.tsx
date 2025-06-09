@@ -32,8 +32,6 @@ const TrashBox = () => {
   };
 
   const onRestore = (id: Id<'documents'>) => {
-    event.stopPropagation();
-
     const promise = restore({ id });
 
     toast.promise(promise, {
