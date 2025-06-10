@@ -25,9 +25,14 @@ import { Navbar } from './Navbar';
 import { BiPlus } from 'react-icons/bi';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import TrashBox from './trash-box';
+import { useSearch } from '@/hooks/use-search';
+import SettingModal from './modals/setting-modal';
+import { useSettings } from '@/stores/use-settings';
 
 export function Navigation() {
+  const search = useSearch();
   const router = useRouter();
+  const setting = useSettings();
   const params = useParams();
   const pathname = usePathname();
   const isMobile = useMediaQuery('(max-width:768px)');
@@ -127,13 +132,11 @@ export function Navigation() {
     }
   }, []);
 
-  const Search = () => {};
-
   return (
     <>
       <aside
         className={cn(
-          `group/sidebar h-full bg-gray-700 dark:bg-zinc-800 overflow-y-auto relative flex flex-col w-60 z-[99999]`,
+          `group/sidebar h-full bg-gray-100 dark:bg-zinc-800 overflow-y-auto relative flex flex-col w-60 z-[99999]`,
           isResetting && 'transition-all ease-in-out duration-300',
           isMobile && 'w-0'
         )}
@@ -155,13 +158,13 @@ export function Navigation() {
             <UserItem />
             <Item
               label="Search"
-              onClick={Search}
+              onClick={search.onOpen}
               iconAction={FaSearch}
               isSearch
             />
             <Item
               label="Settings"
-              // onClick={() => router.push('/settings')}
+              onClick={setting.onOpen}
               iconAction={FaGear}
             />
             <Item
@@ -216,7 +219,8 @@ export function Navigation() {
         ref={navbarRef}
       >
         {!!params.documentId ? (
-          <Navbar isCollapsed={isCollapsed} onResetWidthAction={resetWidth} />
+          // <Navbar isCollapsed={isCollapsed} onResetWidthAction={resetWidth} />
+          <></>
         ) : (
           <nav className="bg-transparent px-3 py-2 w-full">
             {isCollapsed && (
