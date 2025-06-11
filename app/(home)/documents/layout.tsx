@@ -1,12 +1,14 @@
-import { Navigation } from '@/components/NavigationBar';
 import React from 'react';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+import { ModalProvider } from '@/components/providers/modal-provider';
 
 export default async function Layout({
   children,
+  sidebar,
 }: {
   children: React.ReactNode;
+  sidebar: React.ReactNode;
 }) {
   const { userId } = await auth();
 
@@ -15,8 +17,9 @@ export default async function Layout({
   }
 
   return (
-    <div className="h-screen flex bg-red-900 dark:bg-[#1F1F1F]">
-      <Navigation />
+    <div className="h-screen flex bg-gray-200 dark:bg-zinc-900">
+      {sidebar}
+      <ModalProvider />
       <main className="flex-1 h-full overflow-y-auto">{children}</main>
     </div>
   );
