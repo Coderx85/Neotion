@@ -31,3 +31,7 @@ export interface ItemProps {
   onClick?: () => void;
   iconAction: import('react-icons/lib').IconType;
 }
+
+export interface SettingModalProps {
+  children: ReactNode;
+}
