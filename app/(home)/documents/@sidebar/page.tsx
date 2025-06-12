@@ -10,12 +10,12 @@ import { useParams, usePathname, useRouter } from 'next/navigation';
 import { FaChevronLeft, FaSearch, FaTrashRestore } from 'react-icons/fa';
 import { useMediaQuery } from 'usehooks-ts';
 import { FaCirclePlus, FaGear } from 'react-icons/fa6';
-import { BiPlus } from 'react-icons/bi';
+import { BiHome, BiPlus } from 'react-icons/bi';
 import { useMutation } from 'convex/react';
 import { toast } from 'sonner';
 
 import { cn } from '@/utils/lib';
-import { MenuIcon } from 'lucide-react';
+import { MenuIcon, PlusIcon, SearchIcon } from 'lucide-react';
 import { api } from '@/convex/_generated/api';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -30,6 +30,8 @@ import UserItem from '@/app/(home)/documents/_components/user-item';
 import Item from '@/app/(home)/documents/_components/item';
 import { DocumentList } from '@/app/(home)/documents/_components/document-list';
 import TrashBox from '@/components/trash-box';
+import { Navbar } from '@/components/Navbar';
+import { Button } from '@/components/ui/button';
 
 const Navigation = () => {
   const search = useSearch();
@@ -171,6 +173,11 @@ const Navigation = () => {
           <div className="p-2">
             <UserItem />
             <Item
+              label="Home"
+              onClick={() => router.push('/documents')}
+              iconAction={BiHome}
+            />
+            <Item
               label="Search"
               onClick={search.onOpen}
               iconAction={FaSearch}
@@ -233,7 +240,9 @@ const Navigation = () => {
         ref={navbarRef}
       >
         {!!params.documentId ? (
-          <></>
+          <div>
+            <Navbar isCollapsed={isCollapsed} onResetWidthAction={resetWidth} />
+          </div>
         ) : (
           <nav className="bg-transparent px-3 py-2 w-full">
             {isCollapsed && (

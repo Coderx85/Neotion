@@ -27,7 +27,7 @@ export function DocumentList({
   const router = useRouter();
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
-  const search = useQuery(api.document.getSearch);
+  const starredDocument = useQuery(api.document.getStarred);
 
   const onExpand = (documentId: string) => {
     setExpanded((prevExpanded) => ({
@@ -72,8 +72,8 @@ export function DocumentList({
       </p>
       {!!star ? (
         <>
-          {search &&
-            search?.map((document: Doc<'documents'>) => (
+          {starredDocument &&
+            starredDocument?.map((document: Doc<'documents'>) => (
               <div key={document._id} className="mx-2">
                 <Item
                   key={document._id}
@@ -108,7 +108,7 @@ export function DocumentList({
               <Item
                 key={document._id}
                 id={document._id}
-                // onClick={() => onRedirect(document._id)}
+                onClick={() => onRedirect(document._id)}
                 label={document.title}
                 iconAction={FileIcon}
                 documentIcon={document.icon}

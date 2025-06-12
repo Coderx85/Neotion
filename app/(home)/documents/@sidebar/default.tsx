@@ -10,7 +10,7 @@ import { useParams, usePathname, useRouter } from 'next/navigation';
 import { FaChevronLeft, FaSearch, FaTrashRestore } from 'react-icons/fa';
 import { useMediaQuery } from 'usehooks-ts';
 import { FaCirclePlus, FaGear } from 'react-icons/fa6';
-import { BiPlus } from 'react-icons/bi';
+import { BiPlus, BiHome } from 'react-icons/bi';
 import { useMutation } from 'convex/react';
 import { toast } from 'sonner';
 
@@ -30,6 +30,7 @@ import UserItem from '@/app/(home)/documents/_components/user-item';
 import Item from '@/app/(home)/documents/_components/item';
 import { DocumentList } from '@/app/(home)/documents/_components/document-list';
 import TrashBox from '@/components/trash-box';
+import { Navbar } from '@/components/Navbar';
 
 const Navigation = () => {
   const search = useSearch();
@@ -116,11 +117,11 @@ const Navigation = () => {
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
   };
+
   const resetWidth = useCallback(() => {
     if (sidebarRef.current && navbarRef.current) {
       setIsCollapsed(false);
       setIsResetting(true);
-      sidebar.expand();
 
       sidebarRef.current.style.width = isMobile ? '100%' : '240px';
       navbarRef.current.style.setProperty(
@@ -132,20 +133,19 @@ const Navigation = () => {
         setIsResetting(false);
       }, 300);
     }
-  }, [isMobile, sidebar]);
+  }, [isMobile]);
 
   const collapse = useCallback(() => {
     if (sidebarRef.current && navbarRef.current) {
       setIsCollapsed(true);
       setIsResetting(true);
-      sidebar.collapse();
 
       sidebarRef.current.style.width = '0';
       navbarRef.current.style.setProperty('width', '100%');
       navbarRef.current.style.setProperty('left', '0');
       setTimeout(() => setIsResetting(false), 300);
     }
-  }, [sidebar]);
+  }, []);
 
   return (
     <>
@@ -171,6 +171,11 @@ const Navigation = () => {
           </div>
           <div className="p-2">
             <UserItem />
+            <Item
+              label="Home"
+              onClick={() => router.push('/documents')}
+              iconAction={BiHome}
+            />
             <Item
               label="Search"
               onClick={search.onOpen}
@@ -234,7 +239,9 @@ const Navigation = () => {
         ref={navbarRef}
       >
         {!!params.documentId ? (
-          <></>
+          <div>
+            <Navbar isCollapsed={isCollapsed} onResetWidthAction={resetWidth} />
+          </div>
         ) : (
           <nav className="bg-transparent px-3 py-2 w-full">
             {isCollapsed && (

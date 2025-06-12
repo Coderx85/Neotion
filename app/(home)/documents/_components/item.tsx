@@ -17,7 +17,7 @@ import { MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FaChevronDown } from 'react-icons/fa';
-import { FaChevronRight, FaPlus } from 'react-icons/fa6';
+import { FaChevronRight, FaPlus, FaShare } from 'react-icons/fa6';
 import { IconType } from 'react-icons/lib';
 import { toast } from 'sonner';
 import { BiRename, BiStar, BiTrash } from 'react-icons/bi';
@@ -180,6 +180,17 @@ export default function Item({
               <DropdownMenuItem onClick={onStar} className="flex items-center">
                 <BiStar className="w-4 h-4 mr-2" />| Favorite
               </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Dialog>
+                  <DialogTrigger
+                    className="flex items-center"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <BiRename className="w-4 h-4 mr-2 " />| Rename
+                  </DialogTrigger>
+                  <RenameModal id={id} documentName={label} />
+                </Dialog>
+              </DropdownMenuItem>
               <Dialog>
                 <DropdownMenuItem>
                   <DialogTrigger
@@ -214,17 +225,34 @@ export default function Item({
                   </div>
                 </DialogContent>
               </Dialog>
-              <DropdownMenuItem>
-                <Dialog>
+              <Dialog>
+                <DropdownMenuItem>
                   <DialogTrigger
                     className="flex items-center"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <BiRename className="w-4 h-4 mr-2 " />| Rename
+                    <FaShare className="w-4 h-4 mr-2" />| Share
                   </DialogTrigger>
-                  <RenameModal id={id} documentName={label} />
-                </Dialog>
-              </DropdownMenuItem>
+                  <DialogContent>
+                    <DialogTitle className="text-lg flex items-center font-semibold">
+                      <FaShare className="mr-4" />
+                      Share Document
+                    </DialogTitle>
+                    <div className="flex flex-col gap-y-4">
+                      <Label className="text-sm font-medium"></Label>
+                      <p className="text-sm text-muted-foreground">
+                        You can share this document with others once the feature
+                        is available.
+                      </p>
+                      <div className="flex justify-end">
+                        <DialogClose asChild>
+                          <Button variant="outline">Close</Button>
+                        </DialogClose>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </DropdownMenuItem>
+              </Dialog>
               <DropdownMenuSeparator />
               <div className="text-xs text-muted-foreground p-2">
                 Last edited by: {user?.username}
