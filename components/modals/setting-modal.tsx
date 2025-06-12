@@ -7,7 +7,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
@@ -22,11 +21,14 @@ import {
   FaBell,
 } from 'react-icons/fa6';
 import { useSettings } from '@/stores/use-settings';
-import { ThemeOption } from '@/types';
+import { shortcutsProps, ThemeOption } from '@/types';
+import { shortcutsKeys } from '@/constants/setting';
 
 const SettingModal = () => {
   const { theme, setTheme } = useTheme();
   const { isOpen, onOpen, onClose } = useSettings();
+  const [notifications, setNotifications] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   // Wait for component to mount to avoid hydration mismatch
@@ -35,17 +37,17 @@ const SettingModal = () => {
   }, []);
 
   useEffect(() => {
-    const mode = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === ',' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        // Open settings modal logic here
+        onOpen();
       }
     };
-    document.addEventListener('keydown', mode);
+    document.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', mode);
+      document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [onOpen]);
 
   if (!mounted) {
     return null;
@@ -71,6 +73,10 @@ const SettingModal = () => {
       description: 'Follows your system preference',
     },
   ];
+
+  const handleThemeChange = (newTheme: string) => {
+    setTheme(newTheme);
+  };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-7xl max-h-[85vh] overflow-y-auto backdrop-blur-xl bg-background/80 border-border/50 shadow-2xl">
@@ -84,7 +90,7 @@ const SettingModal = () => {
           <p className="text-sm text-muted-foreground/80 ml-12">
             Manage your preferences and account settings
           </p>
-        </DialogHeader>{' '}
+        </DialogHeader>
         <div className="space-y-8">
           {/* Appearance Section */}
           <div className="space-y-5">
@@ -102,7 +108,6 @@ const SettingModal = () => {
                 Theme Preference
               </Label>
               <div className="grid grid-cols-1 gap-4">
-                {' '}
                 {themeOptions.map((option) => {
                   const IconComponent = option.icon;
                   const isSelected = theme === option.value;
@@ -118,7 +123,7 @@ const SettingModal = () => {
                             : 'border-border/30 bg-card/30 hover:border-accent/40 hover:bg-accent/5 hover:shadow-md'
                         }
                       `}
-                      onClick={() => setTheme(option.value)}
+                      onClick={() => handleThemeChange(option.value)}
                     >
                       <div className="flex items-center gap-4">
                         <div
@@ -173,7 +178,7 @@ const SettingModal = () => {
                 })}
               </div>
             </div>
-          </div>{' '}
+          </div>
           <Separator className="bg-border/30" />
           {/* Notifications Section */}
           <div className="space-y-5">
@@ -196,10 +201,10 @@ const SettingModal = () => {
                     Get notified about document changes and mentions
                   </div>
                 </div>
-                {/* <Switch
+                <Switch
                   checked={notifications}
                   onCheckedChange={setNotifications}
-                /> */}
+                />
               </div>
 
               <div className="flex items-center justify-between p-4 rounded-xl bg-card/30 backdrop-blur-sm border border-border/20 hover:bg-card/40 transition-all duration-200">
@@ -211,13 +216,13 @@ const SettingModal = () => {
                     Play sounds for interactions and notifications
                   </div>
                 </div>
-                {/* <Switch
+                <Switch
                   checked={soundEnabled}
                   onCheckedChange={setSoundEnabled}
-                /> */}
+                />
               </div>
             </div>
-          </div>{' '}
+          </div>
           <Separator className="bg-border/30" />
           {/* Account Section */}
           <div className="space-y-5">
@@ -235,7 +240,7 @@ const SettingModal = () => {
                 </div>
               </div>
             </div>
-          </div>{' '}
+          </div>
           <Separator className="bg-border/30" />
           {/* Keyboard Shortcuts Section */}
           <div className="space-y-5">
@@ -249,26 +254,19 @@ const SettingModal = () => {
             </div>
 
             <div className="space-y-3 pl-4">
-              <div className="flex items-center justify-between text-sm p-3 rounded-lg bg-card/20 backdrop-blur-sm border border-border/20">
-                <span className="text-foreground/80 font-medium">
-                  Open Settings
-                </span>
-                <kbd className="px-3 py-1.5 text-xs bg-muted/60 backdrop-blur-sm rounded-md border border-border/40 font-mono shadow-sm">
-                  Ctrl + ,
-                </kbd>
-              </div>
-              <div className="flex items-center justify-between text-sm p-3 rounded-lg bg-card/20 backdrop-blur-sm border border-border/20">
-                <span className="text-foreground/80 font-medium">Search</span>
-                <kbd className="px-3 py-1.5 text-xs bg-muted/60 backdrop-blur-sm rounded-md border border-border/40 font-mono shadow-sm">
-                  Ctrl + K
-                </kbd>
-              </div>
-              <div className="flex items-center justify-between text-sm p-3 rounded-lg bg-card/20 backdrop-blur-sm border border-border/20">
-                <span className="text-foreground/80 font-medium">New Page</span>
-                <kbd className="px-3 py-1.5 text-xs bg-muted/60 backdrop-blur-sm rounded-md border border-border/40 font-mono shadow-sm">
-                  Ctrl + N
-                </kbd>
-              </div>
+              {shortcutsKeys.map((shortcut: shortcutsProps) => (
+                <div
+                  key={shortcut.key}
+                  className="flex items-center justify-between text-sm p-3 rounded-lg bg-card/20 backdrop-blur-sm border border-border/20"
+                >
+                  <span className="text-foreground/80 font-medium">
+                    {shortcut.description}
+                  </span>
+                  <kbd className="px-3 py-1.5 text-xs bg-muted/60 backdrop-blur-sm rounded-md border border-border/40 font-mono shadow-sm">
+                    {'Ctrl/Meta + ' + shortcut.key}
+                  </kbd>
+                </div>
+              ))}
             </div>
           </div>
           <Separator className="bg-border/30" />
@@ -297,7 +295,7 @@ const SettingModal = () => {
                 </div>
               </div>
               <div className="text-xs pt-3 border-t border-border/20 text-center text-muted-foreground/60">
-                © 2024 Notion Clone. All rights reserved.
+                © 2024 Neotion. All rights reserved.
               </div>
             </div>
           </div>

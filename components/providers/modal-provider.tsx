@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearch } from '@/hooks/use-search';
 import SettingModal from '../modals/setting-modal';
 import SearchCommand from '../search-command';
+import { GlobalKeyboardShortcuts } from '../global-keyboard-shortcuts';
 
-export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
+export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -18,6 +18,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
+      <GlobalKeyboardShortcuts />
       <SearchCommand />
       <SettingModal />
     </>

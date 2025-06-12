@@ -3,8 +3,8 @@ import { inter, lora } from '../styles/font';
 import { Metadata } from 'next';
 import { Toaster } from 'sonner';
 import '@/styles/globals.css';
-import { Navigation } from '@/components/NavigationBar';
 import Provider from '@/components/providers/Provider';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
 
 type Props = {
   children: ReactNode;
@@ -20,12 +20,17 @@ const MainLayout = ({ children }: Props) => {
     <Provider>
       <html lang="en">
         <body className={`${inter.className} ${lora.className} antialiased`}>
-          <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
-            <Navigation />
-            <Toaster position="top-right" />
-            <main className="flex-1 h-full overflow-y-auto">{children}</main>
-          </div>
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
+              <Toaster position="top-right" />
+              <main className="flex-1 h-full overflow-y-auto">{children}</main>
+            </div>
+          </ThemeProvider>
         </body>
       </html>
     </Provider>

@@ -4,7 +4,6 @@ import { ConvexProviderWithClerk } from 'convex/react-clerk';
 
 import { config } from '@/utils/config/env';
 import { ConvexReactClient } from 'convex/react';
-import { ThemeProvider } from './ThemeProvider';
 
 export default function Provider({
   children,
@@ -18,7 +17,7 @@ export default function Provider({
       signInFallbackRedirectUrl="/sign-in"
     >
       <ConvexProviderWithClerk useAuth={useAuth} client={client}>
-        <ThemeProvider>{children}</ThemeProvider>
+        {children}
       </ConvexProviderWithClerk>
     </ClerkProvider>
   );

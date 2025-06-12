@@ -17,10 +17,12 @@ export default async function Layout({
   }
 
   return (
-    <div className="h-screen flex bg-gray-200 dark:bg-zinc-900">
+    <div className="h-screen flex bg-gray-200 dark:bg-zinc-900 overflow-hidden">
       {sidebar}
       <ModalProvider />
-      <main className="flex-1 h-full overflow-y-auto">{children}</main>
+      <main className="flex-1 h-full overflow-y-auto overflow-x-hidden w-full min-w-0">
+        {children}
+      </main>
     </div>
   );
 }
