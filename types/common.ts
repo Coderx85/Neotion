@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { IconType } from 'react-icons/lib';
+import { Doc } from '@/convex/_generated/dataModel';
 
 // Common types
 export type AppProps = {
@@ -11,6 +12,11 @@ export type SearchStore = {
   toggle: () => void;
   onOpen: () => void;
   onClose: () => void;
+};
+
+// Document with parent title for search results
+export type DocumentWithParent = Doc<'documents'> & {
+  parentTitle: string | null;
 };
 
 export type FeatureCard = {

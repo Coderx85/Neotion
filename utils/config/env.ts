@@ -1,6 +1,6 @@
 export const config = {
-  title: 'Notion Clone',
-  description: 'A Notion clone built with Next.js, Convex, and Clerk.',
+  title: 'Neotion',
+  description: 'A Neotion built with Next.js, Convex, and Clerk.',
   env: {
     // Authentication
     CLERK_API_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!,
