@@ -35,3 +35,18 @@ export interface ItemProps {
 export interface SettingModalProps {
   children: ReactNode;
 }
+export interface ToolbarProps {
+  initialData: Doc<'documents'>;
+  preview?: boolean;
+}
+
+export interface DocumentPreviewProps {
+  params: {
+    documentId: Id<'documents'>;
+  };
+}
+
+export interface ToolbarProps {
+  initialData: Doc<'documents'>;
+  preview?: boolean;
+}
