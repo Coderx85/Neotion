@@ -39,6 +39,7 @@ export function Cover({ url, preview }: CoverProps) {
         !url && 'h-[12vh]',
         url && 'bg-muted'
       )}
+      onClick={!url ? () => {} : () => coverImage.onReplace(url)}
     >
       {!!url && <Image src={url} fill alt="Cover" className="object-cover" />}
       {url && !preview && (
@@ -55,7 +56,7 @@ export function Cover({ url, preview }: CoverProps) {
           <Button
             onClick={onRemove}
             className="text-muted-foreground text-xs"
-            variant="outline"
+            variant="destructive"
             size="sm"
           >
             <BiX className="w-4 h-4 mr-2" />
