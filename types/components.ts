@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Id, Doc } from '@/convex/_generated/dataModel';
+import { Editor } from '@tiptap/react';
 
 // Component interfaces
 export interface NavbarProps {
@@ -41,12 +42,20 @@ export interface ToolbarProps {
 }
 
 export interface DocumentPreviewProps {
-  params: {
+  params: Promise<{
     documentId: Id<'documents'>;
-  };
+  }>;
 }
 
 export interface ToolbarProps {
   initialData: Doc<'documents'>;
   preview?: boolean;
+}
+
+export interface SlashCommandMenuProps {
+  searchInputRef?: React.RefObject<HTMLInputElement | null>;
+  editor: Editor;
+  isOpen: boolean;
+  onClose: () => void;
+  position?: { x: number; y: number };
 }

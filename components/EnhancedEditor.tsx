@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -30,6 +30,9 @@ export function EnhancedEditor({
 }: TipTapEditorProps) {
   const [showSlashMenu, setShowSlashMenu] = useState(false);
   const [slashMenuPosition, setSlashMenuPosition] = useState({ x: 0, y: 0 });
+  const [slashQuery, setSlashQuery] = useState(''); // Track what user types after slash
+  const ref = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const editor = useEditor({
     extensions: [
@@ -113,25 +116,47 @@ export function EnhancedEditor({
     autofocus: autoFocus,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      onChangeAction(html); // Check for slash command
+      onChangeAction(html);
+
+      // Check for slash command - simplified logic
       const { from } = editor.state.selection;
       const textBefore = editor.state.doc.textBetween(
-        Math.max(0, from - 20),
+        Math.max(0, from - 50), // Increased range to catch more text
         from,
         ''
       );
+
+      // Find the last slash in the text
       const slashIndex = textBefore.lastIndexOf('/');
 
-      if (slashIndex !== -1 && slashIndex === textBefore.length - 1) {
-        // Show slash menu
-        const coords = editor.view.coordsAtPos(from);
-        setSlashMenuPosition({
-          x: coords.left,
-          y: coords.bottom + 10,
-        });
-        setShowSlashMenu(true);
+      // Debug logging
+      console.log('Text before cursor:', textBefore);
+      console.log('Slash index:', slashIndex);
+
+      // Check if we have a slash and it's recent (within reasonable distance)
+      if (slashIndex !== -1 && textBefore.length - slashIndex <= 20) {
+        // Extract the query after the slash
+        const query = textBefore.substring(slashIndex + 1);
+        console.log('Query after slash:', query);
+
+        // Only show menu if the query doesn't contain spaces (indicating it's still a command)
+        if (!query.includes(' ') && !query.includes('\n')) {
+          setSlashQuery(query);
+
+          // Show slash menu
+          const coords = editor.view.coordsAtPos(from);
+          setSlashMenuPosition({
+            x: coords.left,
+            y: coords.bottom + 10,
+          });
+          setShowSlashMenu(true);
+        } else {
+          setShowSlashMenu(false);
+          setSlashQuery('');
+        }
       } else {
         setShowSlashMenu(false);
+        setSlashQuery('');
       }
     },
     editorProps: {
@@ -144,8 +169,50 @@ export function EnhancedEditor({
           className
         ),
       },
+      handleKeyDown: (view, event) => {
+        // Handle slash command trigger
+        if (event.key === '/') {
+          // Don't interfere with the default typing, just prepare to show menu
+          setTimeout(() => {
+            const { from } = view.state.selection;
+            const coords = view.coordsAtPos(from);
+            setSlashMenuPosition({
+              x: coords.left,
+              y: coords.bottom + 10,
+            });
+            setShowSlashMenu(true);
+            setSlashQuery(''); // Start with empty query, will be updated by onUpdate
+          }, 50); // Slightly longer delay to ensure text is processed
+        }
+
+        // Handle escape to close slash menu
+        if (event.key === 'Escape' && showSlashMenu) {
+          event.preventDefault();
+          setShowSlashMenu(false);
+          return true; // Prevent other handlers
+        }
+
+        return false; // Let other handlers process the event
+      },
     },
   });
+
+  // const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+
+  // Handle command selection
+  // const handleCommandSelect = (command: NotionCommandType) => {
+  //   console.log('Command selected:', command.name);
+
+  //   // Add any custom logic here
+  //   if (command.command === '/h1') {
+  //     console.log('Heading 1 selected');
+  //   }
+  //   // Close the palette
+  //   setIsCommandPaletteOpen(false);
+
+  //   // Focus back to editor
+  //   editor?.commands.focus();
+  // };
 
   // Update content when initialContent changes
   useEffect(() => {
@@ -183,17 +250,33 @@ export function EnhancedEditor({
             '[&_.ProseMirror]:border-none',
             className
           )}
+          onClick={() => {
+            if (showSlashMenu) {
+              setShowSlashMenu(false);
+            }
+          }}
+          ref={ref}
         />
       </div>
-
       {showSlashMenu && (
         <SlashCommandMenu
           editor={editor}
           isOpen={showSlashMenu}
+          searchInputRef={searchInputRef}
           onClose={() => setShowSlashMenu(false)}
           position={slashMenuPosition}
+          initialQuery={slashQuery}
         />
       )}
+
+      {/* <NotionCommandDialog
+        open={isCommandPaletteOpen}
+        onOpenChange={setIsCommandPaletteOpen}
+        editor={editor || undefined}
+        onCommandSelect={handleCommandSelect}
+        title="Command Palette"
+        description="Type a command or search for formatting options..."
+      /> */}
     </div>
   );
 }

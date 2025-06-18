@@ -1,3 +1,5 @@
+import { RemixiconComponentType } from '@remixicon/react';
+
 export interface EditorBlock {
   id: string;
   type:
@@ -16,7 +18,7 @@ export interface EditorBlock {
 export interface EditorCommand {
   name: string;
   command: string;
-  icon: string;
+  icon: RemixiconComponentType;
   description: string;
   action: () => void;
 }
