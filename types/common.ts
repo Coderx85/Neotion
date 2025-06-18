@@ -3,9 +3,13 @@ import { IconType } from 'react-icons/lib';
 import { Doc } from '@/convex/_generated/dataModel';
 
 // Common types
-export type AppProps = {
+export type LayoutProps = {
   children: ReactNode;
 };
+
+export interface DocumentLayoutProps extends LayoutProps {
+  sidebar: ReactNode;
+}
 
 export type SearchStore = {
   isOpen: boolean;

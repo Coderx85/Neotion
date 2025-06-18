@@ -8,6 +8,11 @@ export interface NavbarProps {
   onResetWidthAction: () => void;
 }
 
+export interface HomeNavbarProps {
+  id: string;
+  name: string;
+}
+
 export interface ThemeProviderProps {
   children: ReactNode;
   [key: string]: unknown;
