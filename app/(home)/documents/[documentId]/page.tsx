@@ -9,7 +9,6 @@ import { api } from '@/convex/_generated/api';
 import { Toolbar } from '@/components/Toolbar';
 import { Cover } from '@/components/Cover';
 import { Editor } from '@/components/EditorNew';
-// import { Breadcrumb } from '@/components/Breadcrumb'
 import { DocumentMeta } from '@/components/DocumentMeta';
 import { Skeleton } from '@/components/ui/skeleton';
 

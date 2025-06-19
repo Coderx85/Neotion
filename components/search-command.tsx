@@ -70,7 +70,7 @@ const SearchCommand = () => {
     <CommandDialog
       open={isOpen}
       onOpenChange={onClose}
-      className="bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-100"
+      className="bg-clip-padding backdrop-filter backdrop-blur-xs bg-opacity-100"
     >
       <CommandInput
         placeholder={`Search ${user?.firstName || 'User'}'s Neotion...`}

@@ -15,7 +15,7 @@ import { useMutation } from 'convex/react';
 import { toast } from 'sonner';
 
 import { cn } from '@/utils/lib';
-import { MenuIcon, PlusIcon, SearchIcon } from 'lucide-react';
+import { MenuIcon } from 'lucide-react';
 import { api } from '@/convex/_generated/api';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -31,7 +31,6 @@ import Item from '@/app/(home)/documents/_components/item';
 import { DocumentList } from '@/app/(home)/documents/_components/document-list';
 import TrashBox from '@/components/trash-box';
 import { Navbar } from '@/components/Navbar';
-import { Button } from '@/components/ui/button';
 
 const Navigation = () => {
   const search = useSearch();
@@ -239,7 +238,7 @@ const Navigation = () => {
         )}
         ref={navbarRef}
       >
-        {!!params.documentId ? (
+        {!params.documentId ? (
           <div>
             <Navbar isCollapsed={isCollapsed} onResetWidthAction={resetWidth} />
           </div>

@@ -238,7 +238,7 @@ const Navigation = () => {
         )}
         ref={navbarRef}
       >
-        {!!params.documentId ? (
+        {!params.documentId ? (
           <div>
             <Navbar isCollapsed={isCollapsed} onResetWidthAction={resetWidth} />
           </div>

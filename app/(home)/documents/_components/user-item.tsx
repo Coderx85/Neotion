@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { CgChevronDoubleUpR } from 'react-icons/cg';
 import { Button } from '@/components/ui/button';
-import { useUser } from '@clerk/nextjs';
+import { SignOutButton, useUser } from '@clerk/nextjs';
 
 const UserItem = () => {
   const { user } = useUser();
@@ -70,7 +70,7 @@ const UserItem = () => {
           className="cursor-pointer w-full text-muted-foreground"
           asChild
         >
-          <Button>Log Out</Button>
+          <SignOutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

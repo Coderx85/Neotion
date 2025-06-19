@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { Command as CommandPrimitive } from 'cmdk';
-import { SearchIcon } from 'lucide-react';
 
 import { cn } from '@/utils/lib';
 import {
@@ -12,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { BiSearchAlt } from 'react-icons/bi';
 
 function Command({
   className,
@@ -69,7 +69,7 @@ function CommandInput({
       data-slot="command-input-wrapper"
       className="flex h-9 items-center gap-2 border-b px-3"
     >
-      <SearchIcon className="size-4 shrink-0 opacity-50" />
+      <BiSearchAlt className="size-5 shrink-0 opacity-50" />
       <CommandPrimitive.Input
         data-slot="command-input"
         className={cn(

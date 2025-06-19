@@ -2,14 +2,13 @@ import React from 'react';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { ModalProvider } from '@/components/providers/modal-provider';
+import Provider from '@/components/providers/Provider';
+import { DocumentLayoutProps } from '@/types';
 
-export default async function Layout({
+export default async function DocumentLayout({
   children,
   sidebar,
-}: {
-  children: React.ReactNode;
-  sidebar: React.ReactNode;
-}) {
+}: DocumentLayoutProps) {
   const { userId } = await auth();
 
   if (!userId) {
@@ -17,12 +16,14 @@ export default async function Layout({
   }
 
   return (
-    <div className="h-screen flex bg-gray-200 dark:bg-zinc-900 overflow-hidden">
-      {sidebar}
-      <ModalProvider />
-      <main className="flex-1 h-full overflow-y-auto overflow-x-hidden w-full min-w-0">
-        {children}
-      </main>
-    </div>
+    <Provider>
+      <div className="h-screen flex bg-gray-200 dark:bg-zinc-900 overflow-hidden">
+        {sidebar}
+        <ModalProvider />
+        <main className="flex-1 h-full overflow-y-auto overflow-x-hidden w-full min-w-0">
+          {children}
+        </main>
+      </div>
+    </Provider>
   );
 }

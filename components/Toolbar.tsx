@@ -2,20 +2,15 @@
 
 import React, { ComponentRef, useRef, useState } from 'react';
 import { useMutation } from 'convex/react';
-import TextAreaAutoSize from 'react-textarea-autosize';
-
 import { useConverImage } from '@/hooks/use-cover-image';
-import { Doc } from '@/convex/_generated/dataModel';
+
+import TextAreaAutoSize from 'react-textarea-autosize';
 import { Button } from '@/components/ui/button';
 import { api } from '@/convex/_generated/api';
 
+import { ToolbarProps } from '@/types';
 import { IconPicker } from './icon-picker';
 import { BiImageAdd, BiSmile, BiX } from 'react-icons/bi';
-
-interface ToolbarProps {
-  initialData: Doc<'documents'>;
-  preview?: boolean;
-}
 
 export function Toolbar({ initialData, preview }: ToolbarProps) {
   const inputRef = useRef<ComponentRef<'textarea'>>(null);
@@ -117,8 +112,7 @@ export function Toolbar({ initialData, preview }: ToolbarProps) {
       </div>
       {isEditing && !preview ? (
         <TextAreaAutoSize
-          className="text-5xl bg-transparent font-bold break-words outline-none text-[#3F3F3F] dark:text-[#CFCFCF]
-        resize-none"
+          className="text-5xl bg-transparent font-bold break-words outline-none text-[#3F3F3F] dark:text-[#CFCFCF] resize-none"
           ref={inputRef}
           onBlur={disableInput}
           onKeyDown={onKeyDown}

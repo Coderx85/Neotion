@@ -1,6 +1,7 @@
 'use client';
 
 import { useMutation, useQuery } from 'convex/react';
+import { use } from 'react';
 
 import { api } from '@/convex/_generated/api';
 import { Toolbar } from '@/components/Toolbar';
@@ -10,15 +11,16 @@ import { Editor } from '@/components/Editor';
 import { DocumentPreviewProps } from '@/types';
 
 export default function DocumentIdPage({ params }: DocumentPreviewProps) {
+  const resolvedParams = use(params);
   const document = useQuery(api.document.getById, {
-    documentId: params.documentId,
+    documentId: resolvedParams.documentId,
   });
 
   const update = useMutation(api.document.update);
 
   const onChange = (content: string) => {
     update({
-      id: params.documentId,
+      id: resolvedParams.documentId,
       content,
     });
   };

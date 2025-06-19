@@ -79,7 +79,7 @@ const SettingModal = () => {
   };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-7xl max-h-[85vh] overflow-y-auto backdrop-blur-xl bg-background/80 border-border/50 shadow-2xl">
+      <DialogContent className="max-w-7xl max-h-[85vh] overflow-y-auto backdrop-blur-xs bg-background/80 border-border/50 shadow-2xl">
         <DialogHeader className="pb-6 border-b border-border/20">
           <DialogTitle className="flex items-center gap-3 text-xl font-semibold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
             <div className="p-2 rounded-lg bg-primary/10 backdrop-blur-sm border border-primary/20">

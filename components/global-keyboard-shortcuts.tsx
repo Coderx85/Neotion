@@ -9,7 +9,7 @@ export const GlobalKeyboardShortcuts = () => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // Check for backslash key (\) to toggle sidebar
-      if (event.key === '\\') {
+      if ((event.ctrlKey || event.metaKey) && event.key === '\\') {
         event.preventDefault();
         toggle();
       }

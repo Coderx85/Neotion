@@ -2,21 +2,30 @@
 
 import React, { useState, useEffect } from 'react';
 import { Textarea } from '@/components/ui/textarea';
-import { useTheme } from 'next-themes';
 
 interface EditorProps {
-  onChange: (value: string) => void;
+  onChangeAction: (value: string) => void;
   initialContent?: string;
   editable?: boolean;
 }
 
+/**
+ * Editor component for displaying and editing text content.
+ *
+ * @param onChangeAction - Callback function called when the content changes.
+ * @param initialContent - The initial content to display in the editor. Defaults to an empty string.
+ * @param editable - Determines if the editor is editable or read-only. Defaults to true.
+ *
+ * When `editable` is false, the content is displayed as formatted, non-editable text.
+ * When `editable` is true, a textarea is rendered for editing the content.
+ */
+
 export function Editor({
-  onChange,
+  onChangeAction,
   initialContent = '',
   editable = true,
 }: EditorProps) {
   const [content, setContent] = useState(initialContent);
-  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setContent(initialContent);
@@ -25,7 +34,7 @@ export function Editor({
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setContent(value);
-    onChange(value);
+    onChangeAction(value);
   };
 
   if (!editable) {

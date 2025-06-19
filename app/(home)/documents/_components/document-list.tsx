@@ -70,7 +70,7 @@ export function DocumentList({
       >
         No pages available
       </p>
-      {!!star ? (
+      {!star ? (
         <>
           {starredDocument &&
             starredDocument?.map((document: Doc<'documents'>) => (

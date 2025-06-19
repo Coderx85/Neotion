@@ -21,7 +21,6 @@ import { FaChevronRight, FaPlus, FaShare } from 'react-icons/fa6';
 import { IconType } from 'react-icons/lib';
 import { toast } from 'sonner';
 import { BiRename, BiStar, BiTrash } from 'react-icons/bi';
-import { updateTitle } from '@/convex/document';
 import {
   Dialog,
   DialogContent,
@@ -30,7 +29,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import RenameModal from '@/components/modals/rename-modal';
 import { formatDistanceToNow } from 'date-fns';
@@ -63,7 +61,6 @@ export default function Item({
   const router = useRouter();
   const { user } = useUser();
   const create = useMutation(api.document.create);
-  const rename = useMutation(api.document.updateTitle);
   const archive = useMutation(api.document.archive);
   const star = useMutation(api.document.star);
 
@@ -110,7 +107,7 @@ export default function Item({
         if (!expanded) {
           onExpand?.();
         }
-        // router.push(`/documents/${documentId}`);
+        router.push(`/documents/${documentId}`);
       }
     );
 
@@ -147,8 +144,6 @@ export default function Item({
         </div>
       ) : (
         <Icon className="size-4 mr-2 text-muted-foreground dark:text-white/85" />
-        // <>
-        // </>
       )}
       <span className="truncate font-medium text-muted-foreground dark:text-white/85">
         {label}
