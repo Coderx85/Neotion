@@ -82,7 +82,7 @@ const TrashBox = () => {
               <div
                 className="rounded-sm p-2 hover:bg-neutral-200 
               dark:hover:bg-neutral-600"
-                onClick={() => onRestore(document._id)}
+                onClick={(e) => onRestore(document._id)}
               >
                 <BiUndo className="w-4 h-4 text-muted-foreground" />
               </div>

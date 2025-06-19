@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { inter, lora } from '../styles/font';
 import { Metadata } from 'next';
 import { Toaster } from 'sonner';
