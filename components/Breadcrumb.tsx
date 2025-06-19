@@ -15,7 +15,10 @@ interface BreadcrumbProps {
 
 export function Breadcrumb({ documentId }: BreadcrumbProps) {
   const router = useRouter();
-  const document = useQuery(api.document.getById, { documentId });
+  const document = useQuery(
+    api.document.getById,
+    documentId ? { documentId } : 'skip'
+  );
 
   const handleNavigateHome = () => {
     router.push('/documents');

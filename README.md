@@ -1,7 +1,7 @@
 # Neotion
 
 <p align="center">
-  <img src="public/hero.png" alt="Neotion Hero Image" width="700">
+  <img src="public/home.png" alt="Neotion Hero Image" width="700">
 </p>
 
 <p align="center">
@@ -48,9 +48,13 @@
 
 Neotion is a modern, open-source alternative to Notion, designed for users who need a fast, secure, and highly extensible workspace. It provides real-time collaborative editing, markdown support, and a clean, intuitive user interface, all powered by a robust tech stack including Next.js, Convex, and Clerk.
 
+<p align="center">
+  <img src="public/hero.png" alt="Neotion Hero Image" width="700">
+</p>
+
 ---
 
-## ✨ Core Features (The 80/20)
+## ✨ Core Features
 
 This section highlights the key workflows that deliver the most value to our users. Understanding these features will get you up and running with Neotion's core functionality quickly.
 
@@ -58,19 +62,9 @@ This section highlights the key workflows that deliver the most value to our use
 
 At its heart, Neotion is a collaborative tool. Create or open a document, and you can edit it in real-time with your team. Changes are synced instantly across all users, ensuring everyone is on the same page.
 
-<p align="center">
-  <img src="public/documents.png" alt="Real-time collaboration" width="600">
-  <em>Create and organize your documents seamlessly.</em>
-</p>
-
 ### 2. Document Publishing
 
 Share your work with the world with a single click. Any document can be published to a public URL, making it easy to share notes, articles, or documentation.
-
-<p align="center">
-  <img src="public/reading.png" alt="Published Document" width="600">
-  <em>A clean, readable view for your published documents.</em>
-</p>
 
 ### Core Workflow: From Creation to Publication
 
@@ -113,12 +107,13 @@ graph TD
 
 ## 🖼️ Screenshots
 
-<p align="center">
-  <b>Empty State</b><br>
-  <img src="public/empty.png" alt="Empty documents view" width="48%">
+<p align="center" style="margin:5px 0">
+  <h5>Feature</h5><br>
+  <img src="public/feature.png" alt="Feature of the Project">
   &nbsp;
-  <b>Document View</b><br>
-  <img src="public/documents.png" alt="Documents view" width="48%">
+  <br/>
+  <h5>Document View</h5><br>
+  <img src="public/workflow.png" alt="Documents view">
 </p>
 
 ---
@@ -127,16 +122,16 @@ graph TD
 
 Neotion leverages a modern, type-safe technology stack to deliver a high-quality user experience.
 
-| Technology | Role |
-| :--- | :--- |
-| **Next.js 15** | App Router for routing, server components, and API endpoints. |
-| **React 19** | Core UI library for building interactive components. |
-| **Convex** | Backend platform for data storage, real-time sync, and server functions. |
-| **Clerk** | Handles user authentication and session management securely. |
-| **Tiptap** | A headless, extensible rich text editor framework. |
-| **EdgeStore** | Manages file uploads, particularly for cover images. |
-| **Tailwind CSS** | Utility-first CSS framework for styling. |
-| **ShadCN/UI** | A collection of beautifully designed, accessible UI components. |
+| Technology       | Role                                                                     |
+| :--------------- | :----------------------------------------------------------------------- |
+| **Next.js 15**   | App Router for routing, server components, and API endpoints.            |
+| **React 19**     | Core UI library for building interactive components.                     |
+| **Convex**       | Backend platform for data storage, real-time sync, and server functions. |
+| **Clerk**        | Handles user authentication and session management securely.             |
+| **Tiptap**       | A headless, extensible rich text editor framework.                       |
+| **EdgeStore**    | Manages file uploads, particularly for cover images.                     |
+| **Tailwind CSS** | Utility-first CSS framework for styling.                                 |
+| **ShadCN/UI**    | A collection of beautifully designed, accessible UI components.          |
 
 ---
 
@@ -166,12 +161,14 @@ The project follows a standard Next.js App Router structure, with clear separati
 ## 🔧 Installation
 
 1.  **Clone the repository:**
+
     ```bash
     git clone https://github.com/Codex85/neotion.git
     cd neotion
     ```
 
 2.  **Install dependencies:**
+
     ```bash
     npm install
     ```
@@ -205,18 +202,18 @@ npm run start
 
 ## ⚙️ Environment Variables
 
-| Variable | Description |
-| :--- | :--- |
-| `CONVEX_DEPLOYMENT` | Convex deployment ID. Used by `npx convex dev`. |
-| `NEXT_PUBLIC_CONVEX_URL` | Your Convex project URL. |
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk frontend API key. |
-| `CLERK_SECRET_KEY` | Clerk backend secret key. |
-| `NEXT_PUBLIC_CLERK_SIGN_IN_URL` | URL for Clerk sign-in page (e.g., `http://localhost:3000/sign-in`). |
-| `NEXT_PUBLIC_CLERK_SIGN_UP_URL` | URL for Clerk sign-up page (e.g., `http://localhost:3000/sign-up`). |
-| `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL` | Redirect URL after sign-in (e.g., `/`). |
-| `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL` | Redirect URL after sign-up (e.g., `/`). |
-| `EDGE_STORE_ACCESS_KEY` | EdgeStore access key for uploads. |
-| `EDGE_STORE_SECRET_KEY` | EdgeStore secret key for uploads. |
+| Variable                              | Description                                                         |
+| :------------------------------------ | :------------------------------------------------------------------ |
+| `CONVEX_DEPLOYMENT`                   | Convex deployment ID. Used by `npx convex dev`.                     |
+| `NEXT_PUBLIC_CONVEX_URL`              | Your Convex project URL.                                            |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`   | Clerk frontend API key.                                             |
+| `CLERK_SECRET_KEY`                    | Clerk backend secret key.                                           |
+| `NEXT_PUBLIC_CLERK_SIGN_IN_URL`       | URL for Clerk sign-in page (e.g., `http://localhost:3000/sign-in`). |
+| `NEXT_PUBLIC_CLERK_SIGN_UP_URL`       | URL for Clerk sign-up page (e.g., `http://localhost:3000/sign-up`). |
+| `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL` | Redirect URL after sign-in (e.g., `/`).                             |
+| `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL` | Redirect URL after sign-up (e.g., `/`).                             |
+| `EDGE_STORE_ACCESS_KEY`               | EdgeStore access key for uploads.                                   |
+| `EDGE_STORE_SECRET_KEY`               | EdgeStore secret key for uploads.                                   |
 
 ---
 

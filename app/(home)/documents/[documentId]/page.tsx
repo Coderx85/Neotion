@@ -22,9 +22,12 @@ export default function DocumentIdPage({ params }: DocumentIdPageProps) {
   const resolvedParams = React.use(params);
   const update = useMutation(api.document.update);
 
-  const document = useQuery(api.document.getById, {
-    documentId: resolvedParams.documentId,
-  });
+  const document = useQuery(
+    api.document.getById,
+    resolvedParams.documentId
+      ? { documentId: resolvedParams.documentId }
+      : 'skip'
+  );
 
   const onChange = (content: string) => {
     update({

@@ -40,9 +40,12 @@ export function Navbar({ isCollapsed, onResetWidthAction }: NavbarProps) {
   const params = useParams();
   const isMobile = useMediaQuery('(max-width:768px)');
 
-  const document = useQuery(api.document.getById, {
-    documentId: params.documentId as Id<'documents'>,
-  });
+  const document = useQuery(
+    api.document.getById,
+    params.documentId
+      ? { documentId: params.documentId as Id<'documents'> }
+      : 'skip'
+  );
 
   if (document === undefined) {
     return (

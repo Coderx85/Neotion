@@ -12,9 +12,12 @@ import { DocumentPreviewProps } from '@/types';
 
 export default function DocumentIdPage({ params }: DocumentPreviewProps) {
   const resolvedParams = use(params);
-  const document = useQuery(api.document.getById, {
-    documentId: resolvedParams.documentId,
-  });
+  const document = useQuery(
+    api.document.getById,
+    resolvedParams.documentId
+      ? { documentId: resolvedParams.documentId }
+      : 'skip'
+  );
 
   const update = useMutation(api.document.update);
 

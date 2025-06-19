@@ -397,7 +397,7 @@ export const update = mutation({
 
     const userId = identity.subject;
 
-    const { id, ...rest } = args;
+    const { ...rest } = args;
 
     const existingDocument = await context.db.get(args.id);
 
