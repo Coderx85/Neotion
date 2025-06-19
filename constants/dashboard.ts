@@ -13,6 +13,10 @@ import { HomeNavbarProps } from '@/types';
 
 export const homeTabs: HomeNavbarProps[] = [
   {
+    id: 'home',
+    name: 'Home',
+  },
+  {
     id: 'features',
     name: 'Features',
   },
@@ -21,32 +25,16 @@ export const homeTabs: HomeNavbarProps[] = [
     name: 'Stats',
   },
   {
-    id: 'testimonials',
-    name: 'Testimonials',
-  },
-  {
-    id: 'demo',
-    name: 'Demo',
-  },
-  {
-    id: 'about',
-    name: 'About',
-  },
-  {
     id: 'guide',
     name: 'Guide',
-  },
-  {
-    id: 'contact',
-    name: 'Contact',
   },
   {
     id: 'faq',
     name: 'Help',
   },
   {
-    id: 'workflow',
-    name: 'Workflow',
+    id: 'contact',
+    name: 'Contact',
   },
 ];
 
@@ -134,8 +122,32 @@ export const featureCard: FeatureCard[] = [
   },
 ];
 
-export const clients = Array.from({ length: 10 }).map(
-  (click, index: number) => ({
-    href: `/home/${index + 1}.png`,
-  })
-);
+export const testimonials = [
+  {
+    name: 'Sarah Chen',
+    role: 'Product Manager',
+    company: 'FakeCorp',
+    image: '/avatars/sarah.jpg',
+    content:
+      'This Neotion has revolutionized how our team collaborates. The real-time editing and seamless integration make project management effortless.',
+    rating: 5,
+  },
+  {
+    name: 'Marcus Rodriguez',
+    role: 'Lead Developer',
+    company: 'StartupXYZ',
+    image: '/avatars/marcus.jpg',
+    content:
+      'The clean interface and powerful features rival the original Notion. Our development team has adopted it as our primary documentation tool.',
+    rating: 5,
+  },
+  {
+    name: 'Emily Johnson',
+    role: 'Design Director',
+    company: 'CreativeFakeStudio',
+    image: '/avatars/emily.jpg',
+    content:
+      'Beautiful design meets functionality. The customizable workspaces allow us to organize our creative projects exactly how we need them.',
+    rating: 5,
+  },
+];

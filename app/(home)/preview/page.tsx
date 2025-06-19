@@ -52,7 +52,7 @@ export default function DocumentIdPage({ params }: DocumentPreviewProps) {
         <Toolbar preview initialData={document} />
         <Editor
           editable={false}
-          onChange={onChange}
+          onChangeAction={onChange}
           initialContent={document.content}
         />
       </div>

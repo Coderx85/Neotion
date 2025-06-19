@@ -5,40 +5,11 @@ import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { testimonials } from '@/constants';
 
 export default function TestimonialsSection() {
-  const testimonials = [
-    {
-      name: 'Sarah Chen',
-      role: 'Product Manager',
-      company: 'TechCorp',
-      image: '/avatars/sarah.jpg',
-      content:
-        'This Neotion has revolutionized how our team collaborates. The real-time editing and seamless integration make project management effortless.',
-      rating: 5,
-    },
-    {
-      name: 'Marcus Rodriguez',
-      role: 'Lead Developer',
-      company: 'StartupXYZ',
-      image: '/avatars/marcus.jpg',
-      content:
-        'The clean interface and powerful features rival the original Notion. Our development team has adopted it as our primary documentation tool.',
-      rating: 5,
-    },
-    {
-      name: 'Emily Johnson',
-      role: 'Design Director',
-      company: 'Creative Studio',
-      image: '/avatars/emily.jpg',
-      content:
-        'Beautiful design meets functionality. The customizable workspaces allow us to organize our creative projects exactly how we need them.',
-      rating: 5,
-    },
-  ];
-
   return (
-    <section className="py-20 bg-white dark:bg-neutral-900">
+    <section className="py-20 bg-white dark:bg-neutral-900" id="testimonials">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

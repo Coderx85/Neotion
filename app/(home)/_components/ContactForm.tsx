@@ -37,59 +37,53 @@ const ContactForm = () => {
 
   return (
     <div
-      className="order-3 xl:order-none w-full bg-gray-200 dark:bg-gray-800/50 "
+      className="order-3 xl:order-none w-full bg-gradient-to-br from-background/80 to-secondary/60 backdrop-blur-xl"
       id="contact"
     >
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-6 p-5 rounded-xl"
+        className="flex flex-col gap-6 p-8 rounded-xl bg-gradient-to-br from-card/50 to-background/30"
       >
-        <h2 className="text-6xl text-black dark:text-white font-bold">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl text-foreground font-bold drop-shadow-sm">
           Contact Us
         </h2>
-        {/* <p className="text-black dark:text-white/60 xl:text-lg">
-            {" "}
-            I&apos;m currently looking for new opportunities, my inbox is always
-            open. Whether you have a question or just want to say hi, I&apos;ll
-            try my best to get back to you!
-          </p> */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
-            // variant={"outline"}
             type="email"
             id="email"
             required
             placeholder="Email address"
+            className="glass border-border/50 focus:border-primary/70 backdrop-blur-sm"
             onChange={(e) => {
               setFormData({ ...formData, email: e.target.value });
             }}
           />
           <Input
-            // variant={"outline"}
             type="text"
             id="name"
             placeholder="Name"
             required
+            className="glass border-border/50 focus:border-primary/70 backdrop-blur-sm"
             onChange={(e) => {
               setFormData({ ...formData, name: e.target.value });
             }}
           />
           <Input
-            // variant={"outline"}
             type="text"
             id="company"
             placeholder="Company"
             required
+            className="glass border-border/50 focus:border-primary/70 backdrop-blur-sm"
             onChange={(e) => {
               setFormData({ ...formData, company: e.target.value });
             }}
           />
           <Input
-            // variant={"outline"}
             type="text"
             id="phone"
             placeholder="Phone"
             required
+            className="glass border-border/50 focus:border-primary/70 backdrop-blur-sm"
             onChange={(e) => {
               setFormData({ ...formData, phone: e.target.value });
             }}
@@ -98,14 +92,18 @@ const ContactForm = () => {
         <Textarea
           name="message"
           id="message"
-          className="h-[200px] border-primary dark:border-white/85"
+          className="h-[200px] glass border-border/50 focus:border-primary/70 backdrop-blur-sm resize-none"
           placeholder="Let's talk about..."
           required
           onChange={(e) => {
             setFormData({ ...formData, message: e.target.value });
           }}
         />
-        <Button variant={'outline'} type="submit" className=" font-medium">
+        <Button
+          variant={'outline'}
+          type="submit"
+          className="font-medium glass-card hover:glass-strong transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+        >
           Send Message
         </Button>
       </form>
