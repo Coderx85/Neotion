@@ -10,5 +10,9 @@ export const config = {
     // Database
     CONVEX_URL: process.env.NEXT_PUBLIC_CONVEX_URL!,
     CONVEX_DEPLOYMENT: process.env.CONVEX_DEPLOYMENT!,
+
+    // Edge Store
+    EDGE_STORE_ACCESS_KEY: process.env.EDGE_STORE_ACCESS_KEY!,
+    EDGE_STORE_SECRET_KEY: process.env.EDGE_STORE_SECRET_KEY!,
   },
 };

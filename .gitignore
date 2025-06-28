@@ -3,7 +3,9 @@
 .next
 
 # ENVIRONMENT FILES
-.env*
+.env
+.env.local
+.env.*.local
 
 # typescript
 *.tsbuildinfo
