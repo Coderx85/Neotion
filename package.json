@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "lint-staged": "lint-staged",
-    "docker:dev": "node server.js && npx run dev"
+    "docker:dev": "node server.js && npx convex dev"
   },
   "keywords": [],
   "author": "Priyanshu",

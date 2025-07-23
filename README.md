@@ -46,11 +46,11 @@
 ## 📑 Table of Contents
 
 - [🚀 Overview](#-overview)
-- [✨ Core Features (The 80/20)](#-core-features-the-8020)
-- [🧩 All Features](#-all-features)
+- [🧠 Technical Deep Dive](#technical-deep-dive)
+- [✨ Features](#features)
 - [🖼️ Screenshots](#️-screenshots)
 - [🛠️ Tech Stack](#️-tech-stack)
-- [📁 Project Structure](#-project-structure)
+- [📁 Project Structure](###project-structure)
 - [🔧 Installation](#-installation)
 - [💻 Usage](#-usage)
 - [⚙️ Environment Variables](#️-environment-variables)
@@ -67,9 +67,20 @@ Neotion is a modern, open-source alternative to Notion, designed for users who n
   <img src="public/hero.png" alt="Neotion Hero Image" width="700">
 </p>
 
+### 🧠 Technical Deep Dive
+
+Curious about the engineering decisions behind Neotion? Check out [`learn.md`](./learn.md) for an in-depth look at:
+
+- **Why we chose Convex** over traditional databases for real-time collaboration
+- **How we solved real-time editor synchronization** with TipTap and atomic operations  
+- **The security architecture** that ensures user data isolation
+- **Key lessons learned** from building a collaborative platform
+
+Perfect for developers who want to understand the technical challenges and architectural decisions that make Neotion work.
+
 ---
 
-## ✨ Core Features
+## ✨ Features
 
 This section highlights the key workflows that deliver the most value to our users. Understanding these features will get you up and running with Neotion's core functionality quickly.
 
@@ -175,6 +186,8 @@ The project follows a standard Next.js App Router structure, with clear separati
 
 ## 🔧 Installation
 
+### Method 1: Local Development Setup
+
 1.  **Clone the repository:**
 
     ```bash
@@ -189,12 +202,40 @@ The project follows a standard Next.js App Router structure, with clear separati
     ```
 
 3.  **Set up environment variables:**
-    Create a `.env.local` file in the root of the project and add the variables from the table below.
+    Create a `.env.local` file in the root of the project and add the variables from the [Environment Variables](#️-environment-variables) table below.
 
 4.  **Run the development server:**
     ```bash
     npm run dev
     ```
+
+### Method 2: Docker Hub Deployment
+
+1.  **Pull the Docker image:**
+
+    ```bash
+    docker pull coderx85/neotion:latest
+    ```
+
+2.  **Run the Docker container:**
+
+    ```bash
+    docker run -p 3000:3000 \
+      -e NEXT_PUBLIC_CONVEX_URL="your_convex_url" \
+      -e NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="your_clerk_publishable_key" \
+      -e CLERK_SECRET_KEY="your_clerk_secret_key" \
+      -e CONVEX_DEPLOYMENT="your_convex_deployment" \
+      -e EDGE_STORE_ACCESS_KEY="your_edge_store_access_key" \
+      -e EDGE_STORE_SECRET_KEY="your_edge_store_secret_key" \
+      coderx85/neotion:latest
+    ```
+
+3.  **Access the application:**
+    Open your browser and navigate to `http://localhost:3000`
+
+    **Note:** Replace the placeholder values with your actual environment variables. For easier management, you can create a `.env` file and use `--env-file .env` instead of individual `-e` flags.
+
+---
 
 ---
 

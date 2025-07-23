@@ -2,6 +2,13 @@ FROM node:22.11-slim AS build
 
 WORKDIR /app
 
+LABEL name="Priyanshu"
+LABEL version="1.0.0"
+LABEL description="Neotion - A Notion Clone"
+LABEL maintainer="coderx85"
+LABEL email="work.priyanshu085@gmail.com"
+LABEL org.opencontainer.image.source="https://github.com/coderx85/neotion"
+
 # Add ARG instructions for environment variables
 ARG NEXT_PUBLIC_CONVEX_URL=https://localhost:3000
 ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
@@ -52,4 +59,4 @@ LABEL org.opencontainer.immge.source.=https://docker.io/coderx85/neotion
 
 EXPOSE 3000
 
-CMD ["npm","run","docker:run"]
+CMD ["npm","run","docker:dev"]
