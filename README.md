@@ -9,6 +9,21 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/Coderx85/Neotion">
+    <img src="https://img.shields.io/github/stars/Coderx85/Neotion" alt="GitHub Stars">
+  </a>
+  <a href="https://github.com/Coderx85/Neotion/fork">
+    <img src="https://img.shields.io/github/forks/Coderx85/Neotion?" alt="GitHub Forks">
+  </a>
+  <a href="https://github.com/Coderx85/Neotion/issues">
+    <img src="https://img.shields.io/github/issues/Coderx85/Neotion" alt="GitHub Issues">
+  </a>
+  <a href="https://github.com/Coderx85/Neotion/pulls">
+    <img src="https://img.shields.io/github/issues-pr/Coderx85/Neotion" alt="GitHub Pull Requests">
+  </a>
+</p>
+
+<p align="center">
   <a href="#">
     <img src="https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js 15">
   </a>
